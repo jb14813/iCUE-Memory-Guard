@@ -1,0 +1,141 @@
+:root {
+  color-scheme: light;
+  --surface: #fff;
+  --header-surface: #fffffffa;
+  --surface-hover: #eef3f9;
+  --nav-text: #4a5c6e;
+  --caption: #506a7d;
+  --subtle-line: #edf0f4;
+  --stage: #eaf1fb;
+  --extension-stage: #eaf4f5;
+  --camera-stage: #edf0fa;
+  --tam-stage: #edf5f0;
+  --success-surface: #edf7f2;
+  --success-text: #2c7163;
+  --success-line: #d5ebe0;
+  --accent-surface: #edf2fc;
+  --brand-surface: transparent;
+  --brand-filter: none;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e7edf5;
+  --muted: #aab8c8;
+  --blue: #9ab6ff;
+  --blue-hover: #c2d2ff;
+  --line: #324255;
+  --paper: #101923;
+  --soft: #14202e;
+  --sky: #20354f;
+  --teal: #82d0c1;
+  --surface: #192737;
+  --header-surface: #101923fa;
+  --surface-hover: #26384d;
+  --nav-text: #bcc9d8;
+  --caption: #aabdd0;
+  --subtle-line: #28394b;
+  --stage: #1a2c43;
+  --extension-stage: #173039;
+  --camera-stage: #242b46;
+  --tam-stage: #1b322b;
+  --success-surface: #193b33;
+  --success-text: #a1ddc8;
+  --success-line: #345c4f;
+  --accent-surface: #233555;
+  --brand-surface: #fff;
+  --brand-filter: invert(1) hue-rotate(180deg);
+}
+
+/* A useful default even when JavaScript is disabled. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --ink: #e7edf5;
+    --muted: #aab8c8;
+    --blue: #9ab6ff;
+    --blue-hover: #c2d2ff;
+    --line: #324255;
+    --paper: #101923;
+    --soft: #14202e;
+    --sky: #20354f;
+    --teal: #82d0c1;
+    --surface: #192737;
+    --header-surface: #101923fa;
+    --surface-hover: #26384d;
+    --nav-text: #bcc9d8;
+    --caption: #aabdd0;
+    --subtle-line: #28394b;
+    --stage: #1a2c43;
+    --extension-stage: #173039;
+    --camera-stage: #242b46;
+    --tam-stage: #1b322b;
+    --success-surface: #193b33;
+    --success-text: #a1ddc8;
+    --success-line: #345c4f;
+    --accent-surface: #233555;
+    --brand-surface: #fff;
+    --brand-filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+.header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.site-nav { margin-left: auto; }
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); cursor: pointer; }
+.theme-toggle[hidden] { display: none; }
+.theme-toggle:hover { background: var(--surface-hover); }
+.theme-toggle .icon { width: 19px; height: 19px; }
+.theme-sun { display: none; }
+[data-theme="dark"] .theme-sun { display: block; }
+[data-theme="dark"] .theme-moon { display: none; }
+.brand > img { filter: var(--brand-filter); }
+.tam-mark { background: var(--brand-surface); border-radius: 4px; }
+.site-header { background: var(--header-surface); border-color: var(--subtle-line); }
+.site-nav > a { color: var(--nav-text); }
+.site-nav > .nav-donate { border-color: var(--line); }
+.intro-label, .quiet-label, .hero-note, .art-caption, .breadcrumbs, .footer-note, .footer-bottom,
+.footer-main > div > a:not(.brand) { color: var(--caption); }
+.intro-label > span { box-shadow: 0 0 0 4px var(--accent-surface); }
+.button-primary, .skip-link, .donation-section .button { background: #2859df; color: #fff; }
+.button-primary:hover, .donation-section .button:hover { background: #1c46b8; }
+.button-outline { background: var(--surface); border-color: var(--line); }
+.button-outline:hover { background: var(--surface-hover); border-color: var(--muted); }
+.button-light { color: #193148; }
+.hero-stage { background: var(--stage); }
+.hero-window, .ownership-note, .allowance-panel, .tam-menu-figure { background: var(--surface); border-color: var(--line); }
+.window-top { background: var(--soft); }
+.ownership-note > .icon { color: var(--teal); background: var(--success-surface); }
+.promise-strip { background: var(--soft); }
+.promise-strip span { color: var(--nav-text); }
+.promise-strip .icon { color: var(--teal); }
+.extension-visual { background: var(--extension-stage); }
+.visual-caption, .wide-screenshot figcaption, .dashboard-shot figcaption,
+.workcam-gallery figcaption, .tam-menu-figure > figcaption { color: var(--caption); }
+.badge { background: var(--success-surface); color: var(--success-text); border-color: var(--success-line); }
+.workcam-visual, .workcam-gallery, .workcam-visual .visual-caption { background: var(--camera-stage); }
+.philosophy-section, .soft-section { border-color: var(--subtle-line); }
+.site-footer { background: var(--paper); }
+.steps li > span, .donation-icon { background: var(--accent-surface); }
+.tam-visual, .tam-screenshot, .tam-visual .visual-caption { background: var(--tam-stage); }
+.tam-visual .visual-caption, .app-description .project-credit { color: var(--teal); }
+.tam-attribution { border-color: var(--success-line); }
+.contributor-profile { background: var(--soft); border-color: var(--line); }
+.contributor-links a, .contributor-story a { color: var(--blue); }
+.contributor-story blockquote { border-color: var(--line); }
+.contributor-story blockquote p { color: var(--ink); }
+.contributor-story cite { color: var(--muted); }
+.radeon-visual { background: var(--stage); }
+.radeon-panel { background: var(--surface); border-color: var(--line); }
+.radeon-panel ul { color: var(--caption); }
+.radeon-panel .icon { color: var(--blue); }
+
+@media (max-width: 800px) {
+  .header-inner { gap: 10px; }
+  .header-actions { margin-left: auto; }
+  .site-nav { background: var(--paper); }
+}
+
+@media print {
+  :root { color-scheme: light; --ink: #193148; --muted: #5d6d7c; --paper: #fff; --soft: #f5f8fc; --blue: #2859df; }
+  .header-actions { display: none; }
+}

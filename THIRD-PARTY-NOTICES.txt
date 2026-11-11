@@ -1,0 +1,13 @@
+iCUE Memory Guard third-party notices
+
+Corsair, iCUE and CPUID are trademarks or names of their respective owners.
+This independent tool is not affiliated with or endorsed by Corsair or CPUID.
+No original or modified Corsair/CPUID executable images are distributed.
+
+The website handoff reuses JZB Apps branding and site styling. Its bundled
+Manrope font is distributed under the SIL Open Font License, Version 1.1.
+The complete copyright and license text is supplied at:
+website-handoff/dist/apps/icue-memory-guard/assets/Manrope-LICENSE.txt
+
+Inno Setup is a build tool used to produce the Windows installer.
+See https://jrsoftware.org/isinfo.php for its project and licensing information.

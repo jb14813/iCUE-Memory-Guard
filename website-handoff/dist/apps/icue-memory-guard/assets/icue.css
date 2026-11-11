@@ -1,0 +1,14 @@
+/* Product-specific additions to the established JZB Apps site theme. */
+.icue-risk{margin:24px 0;padding:18px 20px;border-left:4px solid #a56a15;background:var(--soft);font-size:14px;line-height:1.75;border-radius:0 10px 10px 0}
+.icue-risk strong{display:block;font-size:15px}.icue-risk p{margin:8px 0 0}
+.icue-badge{color:#795017;background:#fff5df;border-color:#e9d2a0}
+[data-theme=dark] .icue-badge{color:#f3d495;background:#3b321f;border-color:#76603a}
+.icue-tested dl{margin:26px 0}.icue-tested dl>div{padding:14px 0;border-bottom:1px solid var(--line)}
+.icue-tested dt{font-size:12px;color:var(--muted);margin-bottom:6px}.icue-tested dd{margin:0;font-size:17px;font-weight:650;overflow-wrap:anywhere}.icue-tested dd span{font-size:13px;font-weight:500;color:var(--muted)}
+.icue-tested>.text-link{margin-top:20px}.icue-tested h2{font-size:30px;line-height:1.25}
+.icue-features{display:grid;grid-template-columns:1fr 1fr;gap:80px}.icue-features h2{font-size:36px}.icue-features p{font-size:15px;line-height:1.9;margin-top:20px;max-width:65ch}
+.icue-validation{display:grid;grid-template-columns:1fr 1.3fr;gap:70px;align-items:start}.icue-validation h2{font-size:34px;max-width:14ch}.icue-validation p{max-width:67ch;font-size:15px}.icue-validation p+p{margin-top:18px}.icue-validation a{margin-top:22px}
+.icue-contact{margin-top:38px;padding-block:27px;border-block:1px solid var(--line)}.icue-contact h3{margin-bottom:14px}.icue-contact p{max-width:65ch;font-size:14px;line-height:1.85;margin-bottom:18px}
+.icue-contact a{overflow-wrap:anywhere}.faq-answer a,.steps a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}.bottom-links{flex-wrap:wrap}.site-footer a:hover{text-decoration:underline}
+@media(max-width:800px){.icue-features{gap:35px}.icue-features h2{font-size:29px}.icue-features p,.icue-validation p{font-size:13px}.icue-validation{gap:30px}.icue-validation h2{font-size:30px}.icue-tested h2{font-size:25px}}
+@media(max-width:560px){.icue-features,.icue-validation{grid-template-columns:1fr;gap:32px}.icue-validation h2{max-width:18ch}.icue-features h2{font-size:31px}.icue-risk{font-size:13px;padding:16px}.icue-contact p{font-size:13px}.icue-tested>.text-link{font-size:12px}.icue-tested dd{font-size:16px}.product-identity{flex-wrap:wrap}}
