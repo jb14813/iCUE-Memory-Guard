@@ -13,3 +13,6 @@ __pycache__/
 reference/
 candidate-*/
 evidence/
+!website-handoff/dist/
+!website-handoff/dist/**
+docs/superpowers/
