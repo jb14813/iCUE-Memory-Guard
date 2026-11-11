@@ -1,5 +1,7 @@
 # iCUE Memory Guard
 
+[Published v0.1.0 release guide](docs/releases/v0.1.0.md)
+
 **v0.1.0 · Experimental · Windows 11 x64 · JZB Apps**
 
 A local patch for identified memory allocation paths in Corsair's CPU identification service and its CPUID SDK. It derives the modified files from your installed originals, preserves verified originals for recovery, and reloads the affected service.
@@ -48,6 +50,10 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\tools\Build-Installer
 ```
 
 GitHub Actions runs synthetic checks and builds unsigned development artifacts. Release signing uses a retained local JZB Apps key; the key is not included in the repository or CI. See [SIGNING.md](SIGNING.md) for the public verification assets and trust limitations.
+
+## Privacy
+
+Patch checks and recovery data stay local; the guard has no automatic diagnostic-upload feature. Review reports before manually sharing them. Corsair/iCUE has its own privacy settings.
 
 ## Support
 
