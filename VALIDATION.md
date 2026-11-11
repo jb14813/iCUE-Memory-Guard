@@ -1,6 +1,6 @@
 # Validation coverage
 
-Version 0.1.0 is an experimental release for Windows 11 x64. These observations cover a finite local test setup. They do not establish compatibility with every iCUE version, Windows policy, CPU, sensor, game or workload.
+Version 0.1.0 is an experimental release for Windows 11 x64. Local validation used Windows 11 Pro x64, version 10.0.26300, build 26300, with the exact image pair below. These finite observations do not establish compatibility with every iCUE version, Windows policy, CPU, sensor, game or workload.
 
 ## Exact image contract
 
@@ -30,4 +30,11 @@ Even a small update may change the contents or replace the fix. Check Status and
 
 ## Release verification
 
-The release checksums and public signing certificate support verification of the downloaded installer; see [SIGNING.md](SIGNING.md). Synthetic tests and CI builds exercise isolated inputs. Installer integration, recovery behavior on a particular host, and hardware functionality require their own checks; a passing synthetic suite alone does not prove them.
+The following checks passed locally for the same tested pair:
+
+- The signed installer adopted an existing matching patch without changing the CPU-ID service process. Actual uninstall restored both exact original hashes and removed the app and uninstall entry. Reinstall restored both exact patched hashes, and Check verified both original backups.
+- Windows remained in the same boot session. Other Corsair service states and processes were unchanged across the cycle.
+- The installed uninstaller passed pinned-certificate signature verification. Tamper tests rejected changed installer and checksum-manifest copies.
+- Isolated Inno Setup failure fixtures verified activation failure exit code 10 with recovery retained, unsafe uninstall refusal with files retained, and failed preflight without an installation.
+
+The release checksums and public signing certificate support download verification; see [SIGNING.md](SIGNING.md). Synthetic tests and CI builds exercise isolated inputs. These local integration checks do not extend compatibility beyond the tested file contents and environment.
