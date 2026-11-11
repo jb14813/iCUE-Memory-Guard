@@ -1,0 +1,14 @@
+iCUE Memory Guard 0.1.0 - Experimental
+
+Independent of Corsair and CPUID. Tested only with CorsairCpuIdService.exe 5.52.93.0 and cpuidsdk64.dll 1.3.4.7, verified by their exact SHA-256 contents. Unsupported or updated files are refused.
+
+This experimental local modification can cause instability or stop working after an iCUE update. Modified vendor files lose their vendor signature and may be blocked by Windows security policies. No universal or permanent protection is claimed.
+
+Setup derives the fix from your installed originals and retains verified original backups. Only the CPU-ID service may be reloaded. No extra runtime, driver, background application, certificate trust change or reboot is required.
+
+Uninstall restores owned patched files when safe. If a vendor update has replaced a file, the newer file and recovery material are preserved. Unsafe restoration stops uninstall so recovery tools remain available.
+
+The installer uses the existing self-signed JZB Apps identity when signed. Windows may show an unrecognized publisher or SmartScreen warning. No certificate is installed or trusted automatically. Verify release checksums and signatures using the published verification tools.
+
+Website: https://jzbapps.com
+Support: support@jzbapps.com
