@@ -1,0 +1,34 @@
+name: Windows checks and unsigned build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Run synthetic tests
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Get-ChildItem tests -Filter '*.ps1' | ForEach-Object {
+            & powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File $_.FullName
+            if ($LASTEXITCODE -ne 0) { throw ('Test failed: ' + $_.Name) }
+          }
+      - name: Require installed Inno Setup 6
+        shell: powershell
+        run: |
+          $compiler = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if (!(Test-Path -LiteralPath $compiler)) { throw 'Inno Setup 6 is required on this runner' }
+          & $compiler /?
+      - name: Build unsigned development release
+        shell: powershell
+        run: ./tools/Build-Release.ps1
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: icue-memory-guard-unsigned-development
+          path: build/release-*/
+          if-no-files-found: error
