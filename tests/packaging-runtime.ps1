@@ -15,6 +15,15 @@ $null=New-Item -ItemType Directory -Path $temp
 $fixtures=New-Object Collections.Generic.List[object]
 $completed=$false
 function Assert-Fixture([bool]$Condition,[string]$Message){if(-not $Condition){throw $Message}}
+function Wait-FixtureUninstalled([string]$Manager,[string]$Uninstaller,[string]$RegistryPath,[ValidateRange(0,60000)][int]$TimeoutMilliseconds=15000){
+ $timer=[Diagnostics.Stopwatch]::StartNew()
+ while($true){
+  $pending=@($Manager,$Uninstaller,$RegistryPath | Where-Object {Test-Path -LiteralPath $_})
+  if($pending.Count -eq 0){return}
+  if($timer.ElapsedMilliseconds -ge $TimeoutMilliseconds){throw ('Timed out waiting for fixture uninstall cleanup: '+($pending -join ', '))}
+  Start-Sleep -Milliseconds ([Math]::Min(100,[Math]::Max(1,$TimeoutMilliseconds-$timer.ElapsedMilliseconds)))
+ }
+}
 function Invoke-FixtureProcess([string]$Executable,[string]$Log){
  $process=Start-Process -FilePath $Executable -ArgumentList @('/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/SP-',('/LOG="'+$Log+'"')) -WindowStyle Hidden -PassThru
  try{
@@ -86,7 +95,7 @@ try{
  Enable-FixtureUninstall $activation
  $exitCode=Invoke-FixtureProcess $uninstaller (Join-Path $temp 'activation-uninstall-success.log')
  Assert-Fixture ($exitCode -eq 0) ('Safe fixture uninstall failed: '+$exitCode)
- Assert-Fixture (-not(Test-Path -LiteralPath $manager) -and -not(Test-Path -LiteralPath $uninstaller) -and -not(Test-Path -LiteralPath $activation.RegistryPath)) 'Safe uninstall left installed payload or registry entry'
+ Wait-FixtureUninstalled $manager $uninstaller $activation.RegistryPath
  # The marker was created by this test, so Inno correctly leaves the nonempty directory.
  $marker=Join-Path $activation.InstallPath 'allow-fixture-uninstall.tag'
  if(Test-Path -LiteralPath $marker){Remove-Item -LiteralPath $marker}
