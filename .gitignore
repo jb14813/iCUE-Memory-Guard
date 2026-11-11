@@ -1,0 +1,15 @@
+build/
+dist/
+.qa/
+.superpowers/
+.local/
+**/bin/
+**/obj/
+__pycache__/
+*.pfx
+*.p12
+*.key
+*.etl
+reference/
+candidate-*/
+evidence/
