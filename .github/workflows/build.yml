@@ -23,7 +23,8 @@ jobs:
         run: |
           $compiler = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
           if (!(Test-Path -LiteralPath $compiler)) { throw 'Inno Setup 6 is required on this runner' }
-          & $compiler /?
+          $version = [Diagnostics.FileVersionInfo]::GetVersionInfo($compiler).FileVersion
+          Write-Output ('Inno Setup compiler version: ' + $version)
       - name: Build unsigned development release
         shell: powershell
         run: ./tools/Build-Release.ps1
