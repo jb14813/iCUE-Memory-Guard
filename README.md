@@ -24,10 +24,12 @@ The manager is installed under `%ProgramFiles%\JZB Apps\iCUE Memory Guard`. To i
 
 ```powershell
 $manager = Join-Path $env:ProgramFiles 'JZB Apps\iCUE Memory Guard\Manage-iCUEMemoryGuard.ps1'
-& $manager -Action Status
-& $manager -Action Check
-& $manager -Action Restore
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$manager" -Action Status
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$manager" -Action Check
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$manager" -Action Restore
 ```
+
+The execution-policy override applies only to each launched PowerShell process; it does not change the stored Windows policy or certificate trust.
 
 `Status` and `Check` are read-only. `Install` applies the supported patch or verifies an existing owned installation. `Restore` restores verified originals only over the exact patched files this tool owns. `Uninstall` performs the manager's recovery operation; use **Windows Settings → Apps → Installed apps → iCUE Memory Guard → Uninstall** to remove the installed application as well.
 
@@ -42,7 +44,7 @@ The repository contains our source and changed-byte patch definitions, not origi
 Build from Windows PowerShell with Inno Setup 6 installed:
 
 ```powershell
-.\tools\Build-Installer.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\tools\Build-Installer.ps1"
 ```
 
 GitHub Actions runs synthetic checks and builds unsigned development artifacts. Release signing uses a retained local JZB Apps key; the key is not included in the repository or CI. See [SIGNING.md](SIGNING.md) for the public verification assets and trust limitations.

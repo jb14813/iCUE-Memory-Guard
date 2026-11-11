@@ -39,9 +39,11 @@ An untrusted-chain result is possible for this self-signed identity. Inspect the
 Run both pinned-key checks from the download folder:
 
 ```powershell
-.\Verify-Release.ps1 -Path .\iCUEMemoryGuard-Setup-0.1.0.exe -CertificatePath .\JZBApps.cer
-.\Verify-ReleaseManifest.ps1 -Manifest .\SHA256SUMS -CertificatePath .\JZBApps.cer -CheckFiles
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\Verify-Release.ps1" -Path ".\iCUEMemoryGuard-Setup-0.1.0.exe" -CertificatePath ".\JZBApps.cer"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\Verify-ReleaseManifest.ps1" -Manifest ".\SHA256SUMS" -CertificatePath ".\JZBApps.cer" -CheckFiles
 ```
+
+The execution-policy override applies only to each launched process; it does not change the stored Windows policy or certificate trust.
 
 The retained public certificate has subject `CN=JZB Apps Radeon Memory Guard Experimental`. The expected identity is determined by its pinned certificate fingerprint; the certificate is also used for this JZB Apps release.
 
