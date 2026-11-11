@@ -1,11 +1,15 @@
 [CmdletBinding()]
 param(
  [Parameter(Mandatory)][string]$Manifest,
- [Parameter(Mandatory)][string]$CertificatePath,
+ [string]$CertificatePath,
  [string]$ExpectedCertificateSha256='776d8337e24c2f2d0c5b60d8e3778f34a636c0f8de8e1b54e68d081d4a4f6e90',
  [switch]$CheckFiles
 )
 $ErrorActionPreference='Stop'
+if(-not $CertificatePath){
+ $adjacent=Join-Path $PSScriptRoot 'JZBApps.cer'
+ $CertificatePath=if(Test-Path -LiteralPath $adjacent -PathType Leaf){$adjacent}else{Join-Path $PSScriptRoot '../signing/JZBApps.cer'}
+}
 $certificate=New-Object Security.Cryptography.X509Certificates.X509Certificate2((Get-Item -LiteralPath $CertificatePath).FullName)
 $sha=[Security.Cryptography.SHA256]::Create()
 try{$fingerprint=([BitConverter]::ToString($sha.ComputeHash($certificate.RawData))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}

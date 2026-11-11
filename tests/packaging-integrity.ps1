@@ -23,6 +23,19 @@ try{
  Write-Manifest $line
  $result=& $verify -Manifest $manifest -CertificatePath $certPath -ExpectedCertificateSha256 $pin -CheckFiles
  if(-not $result.SignatureVerified -or $result.CheckedFiles -ne 1){throw 'Valid signed manifest was not verified'}
+ $releaseVerifier=Join-Path $temp 'Verify-ReleaseManifest.ps1'
+ Copy-Item -LiteralPath $verify -Destination $releaseVerifier
+ Copy-Item -LiteralPath $certPath -Destination (Join-Path $temp 'JZBApps.cer')
+ $project=Join-Path $temp 'project'
+ $null=New-Item -ItemType Directory -Path (Join-Path $project 'tools'),(Join-Path $project 'signing')
+ $projectVerifier=Join-Path $project 'tools/Verify-ReleaseManifest.ps1'
+ Copy-Item -LiteralPath $verify -Destination $projectVerifier
+ Copy-Item -LiteralPath $certPath -Destination (Join-Path $project 'signing/JZBApps.cer')
+ foreach($script in @($releaseVerifier,$projectVerifier)){
+  $previous=$ErrorActionPreference
+  try{$ErrorActionPreference='Continue';$output=& powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $script -Manifest $manifest -ExpectedCertificateSha256 $pin -CheckFiles 2>&1;$exitCode=$LASTEXITCODE}finally{$ErrorActionPreference=$previous}
+  if($exitCode -ne 0 -or ($output -join "`n") -notmatch 'True'){throw ('Standalone manifest verifier did not discover its public certificate: '+($output -join "`n"))}
+ }
  Must-Fail {& $verify -Manifest $manifest -CertificatePath $certPath -CheckFiles} 'a substituted certificate'
  [IO.File]::AppendAllText($payload,'tamper')
  Must-Fail {& $verify -Manifest $manifest -CertificatePath $certPath -ExpectedCertificateSha256 $pin -CheckFiles} 'tampered payload'
@@ -37,4 +50,9 @@ try{
  [IO.File]::AppendAllText($manifest,'tamper')
  Must-Fail {& $verify -Manifest $manifest -CertificatePath $certPath -ExpectedCertificateSha256 $pin} 'tampered manifest'
  Write-Output 'PASS release integrity: valid signature; certificate substitution, file tamper, duplicate, traversal, empty and manifest tamper rejected'
-}finally{$cert.Dispose();$key.Dispose();$sha.Dispose();Remove-Item -LiteralPath $temp -Recurse -Force}
+}finally{
+ $cert.Dispose();$key.Dispose();$sha.Dispose()
+ $resolved=[IO.Path]::GetFullPath($temp)
+ if(-not $resolved.StartsWith(([IO.Path]::GetFullPath([IO.Path]::GetTempPath())),[StringComparison]::OrdinalIgnoreCase) -or [IO.Path]::GetFileName($resolved) -notlike 'icue-integrity-*'){throw 'Unsafe test cleanup target'}
+ Remove-Item -LiteralPath $resolved -Recurse -Force
+}

@@ -1,6 +1,10 @@
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$Path,[string]$CertificatePath=(Join-Path $PSScriptRoot '..\signing\JZBApps.cer'),[string]$ExpectedSha256)
+param([Parameter(Mandatory)][string]$Path,[string]$CertificatePath,[string]$ExpectedSha256)
 $ErrorActionPreference='Stop'
+if(-not $CertificatePath){
+ $adjacent=Join-Path $PSScriptRoot 'JZBApps.cer'
+ $CertificatePath=if(Test-Path -LiteralPath $adjacent -PathType Leaf){$adjacent}else{Join-Path $PSScriptRoot '../signing/JZBApps.cer'}
+}
 $file=(Get-Item -LiteralPath $Path).FullName
 $expected=New-Object Security.Cryptography.X509Certificates.X509Certificate2((Get-Item -LiteralPath $CertificatePath).FullName)
 $sha=[Security.Cryptography.SHA256]::Create()

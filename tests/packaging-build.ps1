@@ -42,8 +42,16 @@ try{
  }
  $rejected=$false;try{& (Join-Path $temp 'tools/Build-Release.ps1') -CompilerPath $CompilerPath | Out-Null}catch{$rejected=$_.Exception.Message -match 'already exists'}
  if(-not $rejected){throw 'Builder overwrote existing release assets'}
- $rejected=$false;try{& (Join-Path $temp 'tools/Verify-Release.ps1') -Path $exe | Out-Null}catch{$rejected=$true}
- if(-not $rejected){throw 'Verifier accepted unsigned executable'}
+ function Assert-UnsignedRejection([string]$Verifier,[string]$Certificate){
+  $arguments=@('-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',$Verifier,'-Path',$exe)
+  if($Certificate){$arguments+=@('-CertificatePath',$Certificate)}
+  $previous=$ErrorActionPreference
+  try{$ErrorActionPreference='Continue';$output=& powershell.exe @arguments 2>&1;$exitCode=$LASTEXITCODE}finally{$ErrorActionPreference=$previous}
+  if($exitCode -eq 0 -or ($output -join "`n") -notmatch 'Missing Authenticode signature'){throw ('Unsigned verifier did not reach signature rejection: '+($output -join "`n"))}
+ }
+ Assert-UnsignedRejection (Join-Path $temp 'tools/Verify-Release.ps1') $certificatePath
+ Assert-UnsignedRejection (Join-Path $temp 'tools/Verify-Release.ps1') ''
+ Assert-UnsignedRejection (Join-Path $release.Directory 'Verify-Release.ps1') ''
  Write-Output 'PASS package build: vendor payload and unrelated signer rejected; unsigned EXE metadata and final checksums; overwrite and unsigned verification refused'
 }finally{
  $resolved=[IO.Path]::GetFullPath($temp)
