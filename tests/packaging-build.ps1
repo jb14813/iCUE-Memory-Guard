@@ -4,6 +4,7 @@ $ErrorActionPreference='Stop'
 if(-not $CompilerPath){$CompilerPath=Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6/ISCC.exe'}
 if(-not(Test-Path -LiteralPath $CompilerPath)){throw 'Inno Setup 6 required for package build tests'}
 $root=Split-Path $PSScriptRoot -Parent
+$expectedVersion=(Get-Content -LiteralPath (Join-Path $root 'VERSION') -Raw).Trim()
 $temp=Join-Path ([IO.Path]::GetTempPath()) ('icue-package-'+[guid]::NewGuid().ToString('N'))
 $null=New-Item -ItemType Directory -Path $temp
 try{
@@ -30,9 +31,9 @@ try{
   if(-not $rejected){throw 'Builder accepted an unrelated signing identity'}
  }finally{[IO.File]::WriteAllBytes($certificatePath,$publicBytes);$testCert.Dispose();$testKey.Dispose()}
  $release=& (Join-Path $temp 'tools/Build-Release.ps1') -CompilerPath $CompilerPath
- $exe=Join-Path $release.Directory 'iCUEMemoryGuard-Setup-0.1.0.exe'
+ $exe=Join-Path $release.Directory ('iCUEMemoryGuard-Setup-'+$expectedVersion+'.exe')
  $info=[Diagnostics.FileVersionInfo]::GetVersionInfo($exe)
- if($info.ProductName.Trim() -ne 'iCUE Memory Guard' -or $info.CompanyName.Trim() -ne 'JZB Apps' -or $info.ProductVersion.Trim() -ne '0.1.0'){throw ('Installer metadata is incorrect: '+$info.ProductName+' / '+$info.CompanyName+' / '+$info.ProductVersion)}
+ if($info.ProductName.Trim() -ne 'iCUE Memory Guard' -or $info.CompanyName.Trim() -ne 'JZB Apps' -or $info.ProductVersion.Trim() -ne $expectedVersion){throw ('Installer metadata is incorrect: '+$info.ProductName+' / '+$info.CompanyName+' / '+$info.ProductVersion)}
  if((Get-AuthenticodeSignature -LiteralPath $exe).Status -ne 'NotSigned'){throw 'CI build must be unsigned'}
  $files=@(Get-ChildItem -LiteralPath $release.Directory -File)
  if($files.Count -ne 5){throw 'Unsigned release payload allowlist changed'}

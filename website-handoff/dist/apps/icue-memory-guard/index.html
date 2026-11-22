@@ -22,12 +22,12 @@
 <h1>iCUE<br>Memory Guard</h1>
 <p>A local patch for identified memory allocation paths in iCUE’s CPU identification service and CPUID SDK. Keep verified originals and restore them when needed.</p>
 <div class="icue-risk" role="note" aria-label="Experimental software warning"><strong>Experimental software.</strong><p>Modified vendor files lose valid vendor signatures. Instability or loss of sensor functionality is possible, and updates may overwrite the fix. Windows security policies may block the modified files.</p></div>
-<div class="hero-actions"><a class="button button-primary" href="https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.1.0/iCUEMemoryGuard-Setup-0.1.0.exe">Download for Windows</a><a class="text-link" href="https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.1.0">Release files</a></div>
-<p class="small-note">v0.1.0 prerelease · Free · Windows 11 x64 · Administrator access</p>
+<div class="hero-actions"><a class="button button-primary" href="https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.2.0/iCUEMemoryGuard-Setup-0.2.0.exe">Download for Windows</a><a class="text-link" href="https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.2.0">Release files</a></div>
+<p class="small-note">v0.2.0 prerelease · Free · Windows 11 x64 · Administrator access</p>
 </div>
 <aside class="product-summary icue-tested" aria-labelledby="compatibility-title">
-<h2 id="compatibility-title">Exact contents.<br>One tested pair.</h2>
-<dl><div><dt>CPU identification service</dt><dd>CorsairCpuIdService.exe<br><span>Tested label 5.52.93.0</span></dd></div><div><dt>CPUID SDK</dt><dd>cpuidsdk64.dll<br><span>Tested label 1.3.4.7</span></dd></div><div><dt>Compatibility check</dt><dd>SHA-256 of both files</dd></div></dl>
+<h2 id="compatibility-title">Exact contents.<br>Known file pairs.</h2>
+<dl><div><dt>CPU identification service</dt><dd>CorsairCpuIdService.exe<br><span>Tested labels 5.52.93.0 / 5.54.46.0</span></dd></div><div><dt>CPUID SDK</dt><dd>cpuidsdk64.dll<br><span>Tested label 1.3.4.7</span></dd></div><div><dt>Compatibility check</dt><dd>SHA-256 of both files</dd></div></dl>
 <p>Version labels alone do not decide compatibility. Both files must match the tested patch definitions. Even a small update may change those contents.</p>
 <a class="text-link" href="https://github.com/jb14813/iCUE-Memory-Guard/blob/main/VALIDATION.md">See exact hashes and test coverage</a>
 </aside></div>
@@ -48,7 +48,7 @@
 <details><summary>What if restore or uninstall reports a conflict?<span class="faq-plus" aria-hidden="true">+</span></summary><div class="faq-answer"><p>Keep the recovery material and report the Status/Check result. Uninstall stops if an owned patch cannot be safely restored. If iCUE is absent or a vendor update replaced the files, verified recovery material may be retained; older files are not restored over unknown vendor contents.</p></div></details>
 </div>
 <div class="icue-contact"><h3>Support from JZB Apps</h3><p>Include the app, Windows and iCUE versions, the manager’s Status/Check result and a description of the problem. Review reports for personal paths before sharing.</p><a class="text-link" href="mailto:support@jzbapps.com">support@jzbapps.com</a></div>
-<div class="bottom-links"><a href="https://github.com/jb14813/iCUE-Memory-Guard">Source and instructions</a><a href="https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.1.0/SHA256SUMS">SHA-256 checksums</a><a href="https://github.com/jb14813/iCUE-Memory-Guard/blob/main/SIGNING.md">Verify downloads</a><a href="https://github.com/jb14813/iCUE-Memory-Guard/blob/main/LICENSE">License</a></div>
+<div class="bottom-links"><a href="https://github.com/jb14813/iCUE-Memory-Guard">Source and instructions</a><a href="https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.2.0/SHA256SUMS">SHA-256 checksums</a><a href="https://github.com/jb14813/iCUE-Memory-Guard/blob/main/SIGNING.md">Verify downloads</a><a href="https://github.com/jb14813/iCUE-Memory-Guard/blob/main/LICENSE">License</a></div>
 <p class="small-note">An independent JZB Apps utility. Not affiliated with or endorsed by Corsair or CPUID.</p>
 </section>
 </main>

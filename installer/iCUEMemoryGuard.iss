@@ -120,7 +120,7 @@ begin
   end;
   ExtractTemporaryFiles('{tmp}\icue-check\*');
   if not RunGuard('Check', ExpandConstant('{tmp}\icue-check')) then
-    Result := 'Compatibility or recovery checks failed. Only the exact tested service 5.52.93.0 and SDK 1.3.4.7 are supported. Setup made no patch changes. Run the manager Check action for details.';
+    Result := 'Compatibility or recovery checks failed. Only the exact tested service 5.52.93.0 or 5.54.46.0 with SDK 1.3.4.7 is supported. Setup made no patch changes. Run the manager Check action for details.';
 end;
 procedure CurStepChanged(CurStep: TSetupStep);
 begin

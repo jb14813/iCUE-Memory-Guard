@@ -1,18 +1,18 @@
 # iCUE Memory Guard
 
-[Published v0.1.0 release guide](docs/releases/v0.1.0.md)
+[v0.2.0 release guide](https://github.com/jb14813/iCUE-Memory-Guard/blob/main/docs/releases/v0.2.0.md)
 
-**v0.1.0 · Experimental · Windows 11 x64 · JZB Apps**
+**v0.2.0 · Experimental · Windows 11 x64 · JZB Apps**
 
 A local patch for identified memory allocation paths in Corsair's CPU identification service and its CPUID SDK. It derives the modified files from your installed originals, preserves verified originals for recovery, and reloads the affected service.
 
-[Download Windows installer](https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.1.0/iCUEMemoryGuard-Setup-0.1.0.exe) · [Release files](https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.1.0) · [Verify downloads](SIGNING.md)
+[Download Windows installer](https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.2.0/iCUEMemoryGuard-Setup-0.2.0.exe) · [Release files](https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.2.0) · [Verify downloads](SIGNING.md)
 
 ## Before installing
 
 This is an independent experimental tool, unaffiliated with Corsair or CPUID. Modifying vendor files invalidates their vendor signatures. Windows security policies may prevent the modified files from loading. Instability, loss of sensor functionality or update conflicts are possible. Restore the originals if problems appear.
 
-Compatibility is determined by **exact file contents**, not version labels alone. The tested originals identify themselves as `CorsairCpuIdService.exe` 5.52.93.0 and `cpuidsdk64.dll` 1.3.4.7. Both files must match the published patch definitions. A small vendor update can change those contents and invalidate compatibility or ownership; an update can also overwrite the fix. Unknown files are preserved, and there is no automatic reapplication to an unfamiliar build.
+Compatibility is determined by **exact file contents**, not version labels alone. Supported originals identify themselves as `CorsairCpuIdService.exe` 5.52.93.0 or 5.54.46.0 with `cpuidsdk64.dll` 1.3.4.7. Both files must match the published patch definitions. A small vendor update can change those contents and invalidate compatibility or ownership; an update can also overwrite the fix. Unknown files are preserved, and there is no automatic reapplication to an unfamiliar build.
 
 See [validation coverage and exact hashes](VALIDATION.md). The finite local tests do not establish that every iCUE memory leak is fixed or that every system, game and sensor is supported.
 
@@ -33,7 +33,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$manager" -Action Resto
 
 The execution-policy override applies only to each launched PowerShell process; it does not change the stored Windows policy or certificate trust.
 
-`Status` and `Check` are read-only. `Install` applies the supported patch or verifies an existing owned installation. `Restore` restores verified originals only over the exact patched files this tool owns. `Uninstall` performs the manager's recovery operation; use **Windows Settings → Apps → Installed apps → iCUE Memory Guard → Uninstall** to remove the installed application as well.
+`Status` and `Check` are read-only. `Install` applies the matching supported patch or verifies an existing owned installation. After an iCUE update to a supported pair, rerun Setup to apply that pair's definition. `Restore` restores verified originals only over the exact patched files this tool owns. `Uninstall` performs the manager's recovery operation; use **Windows Settings → Apps → Installed apps → iCUE Memory Guard → Uninstall** to remove the installed application as well.
 
 All actions accept `-Json` and `-Quiet`; failures return a nonzero exit code. Uninstall stops if an owned patch cannot be safely restored. Unknown vendor files are preserved. Recovery material may remain when iCUE is absent or an update has replaced the files; keep it until recovery is resolved. Do not delete backups to bypass an error.
 
@@ -41,7 +41,7 @@ Windows' built-in PowerShell 5.1 runs the tool. It adds no resident process, ser
 
 ## Source and builds
 
-The repository contains our source and changed-byte patch definitions, not original or modified Corsair/CPUID images. [GitHub supplies the source archives for v0.1.0](https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.1.0).
+The repository contains our source and changed-byte patch definitions, not original or modified Corsair/CPUID images. [GitHub supplies the source archives for v0.2.0](https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.2.0).
 
 Build from Windows PowerShell with Inno Setup 6 installed:
 

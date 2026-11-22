@@ -276,10 +276,20 @@ function Invoke-MemoryGuard([string]$RequestedAction,[string]$RepositoryRoot){
  # Binding content pins. No runtime switch can relax these identities.
  $originalHash='EAB48C956727C5183E42BA053660DF4005ADFBC2372EDD66AD2BD512B1A67943'
  $patchedHash='1FA7ABD748B0052E2DA54717E2FAEC2954AC9B8B061160F6D744F656FBF5B57B'
+ $serviceDefinition='patches/service.json'
+ if(Test-Path -LiteralPath $target){
+  AssertManagedFile $target
+  $observedServiceHash=Hash $target
+  if($observedServiceHash -in @('8E57FD673FB93F3944C840DEC3604FDC225E981175059D7C7C038D558A30566C','8601196529C4535B0407034416F980D0A6E83E75DD97455334E7FE073AC23DF2')){
+   $originalHash='8E57FD673FB93F3944C840DEC3604FDC225E981175059D7C7C038D558A30566C'
+   $patchedHash='8601196529C4535B0407034416F980D0A6E83E75DD97455334E7FE073AC23DF2'
+   $serviceDefinition='patches/service-5.54.46.json'
+  }
+ }
  $sdkHash='C51DDF2325592AAF91DCD2A814BC2A282269F305353EB04C9C8621C9BC791483'
  $patchedSdkHash='19A4579A06567DDDBE399314499177CE0FDCCF0A029CD01D313F6108229A7879'
  $images=@(
-  [pscustomobject]@{Name='Service';Target=$target;OriginalHash=$originalHash;PatchedHash=$patchedHash;Definition=(Join-Path $RepositoryRoot 'patches/service.json');Backup=(Join-Path $managedRoot ('CorsairCpuIdService.original-'+$originalHash.ToLowerInvariant()+'.exe'));CurrentHash=$null;DesiredHash=$null;Stage=$null;Recovery=$null;ReplacementAttempted=$false},
+  [pscustomobject]@{Name='Service';Target=$target;OriginalHash=$originalHash;PatchedHash=$patchedHash;Definition=(Join-Path $RepositoryRoot $serviceDefinition);Backup=(Join-Path $managedRoot ('CorsairCpuIdService.original-'+$originalHash.ToLowerInvariant()+'.exe'));CurrentHash=$null;DesiredHash=$null;Stage=$null;Recovery=$null;ReplacementAttempted=$false},
   [pscustomobject]@{Name='Sdk';Target=$sdk;OriginalHash=$sdkHash;PatchedHash=$patchedSdkHash;Definition=(Join-Path $RepositoryRoot 'patches/sdk.json');Backup=(Join-Path $managedRoot ('cpuidsdk64.original-'+$sdkHash.ToLowerInvariant()+'.dll'));CurrentHash=$null;DesiredHash=$null;Stage=$null;Recovery=$null;ReplacementAttempted=$false}
  )
  foreach($image in $images){if(Test-Path -LiteralPath $image.Target){AssertManagedFile $image.Target;$image.CurrentHash=Hash $image.Target}}

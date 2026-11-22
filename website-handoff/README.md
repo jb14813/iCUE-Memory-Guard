@@ -11,13 +11,13 @@ All downloads and source links point directly to GitHub. Do not upload installer
 The installer URL is:
 
 ```text
-https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.1.0/iCUEMemoryGuard-Setup-0.1.0.exe
+https://github.com/jb14813/iCUE-Memory-Guard/releases/download/v0.2.0/iCUEMemoryGuard-Setup-0.2.0.exe
 ```
 
 The release URL is:
 
 ```text
-https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.1.0
+https://github.com/jb14813/iCUE-Memory-Guard/releases/tag/v0.2.0
 ```
 
 Before upload, confirm that the public release assets and `main` documentation links resolve. Test the final page at desktop and mobile sizes, including its navigation, theme toggle and FAQ controls. Confirm that every download still goes to GitHub.
